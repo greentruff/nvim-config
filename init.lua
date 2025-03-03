@@ -37,13 +37,22 @@ vim.keymap.set('v', '<D-c>', '"+y', { desc = 'Yank to system keyboard' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set(
+  'n',
+  '<leader>q',
+  vim.diagnostic.setloclist,
+  { desc = 'Open diagnostic [Q]uickfix list' }
+)
 
 -- Windows: Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Utility
+vim.keymap.set('n', '<leader>w', ':w<CR>')
+vim.keymap.set('t', '<C-\\><C-\\>', '<C-\\><C-n>')
 
 -- [[ Basic Autocommands ]]
 
@@ -57,10 +66,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  local out =
+    vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
     error('Error cloning lazy.nvim:\n' .. out)
   end
@@ -69,19 +79,22 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 
-require('lazy').setup {
-  { import = 'plugins.sleuth' },
-  { import = 'plugins.gitsigns' },
-  { import = 'plugins.which-key' },
-  { import = 'plugins.telescope' },
-  { import = 'plugins.lspconfig' },
-  { import = 'plugins.conform' },
-  { import = 'plugins.cmp' },
+require('lazy').setup({
   { import = 'plugins.themes' },
-  { import = 'plugins.todo-comments' },
-  { import = 'plugins.mini' },
-  { import = 'plugins.treesitter' },
+
   { import = 'plugins.neo-tree' },
-}
+  { import = 'plugins.telescope' },
+
+  { import = 'plugins.gitsigns' },
+  { import = 'plugins.mini' },
+  { import = 'plugins.sleuth' },
+  { import = 'plugins.todo-comments' },
+  { import = 'plugins.which-key' },
+
+  { import = 'plugins.cmp' },
+  { import = 'plugins.conform' },
+  { import = 'plugins.lspconfig' },
+  { import = 'plugins.treesitter' },
+})
 
 -- vim: ts=2 sts=2 sw=2 et

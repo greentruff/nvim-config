@@ -7,6 +7,15 @@ return {
     },
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '==',
+        function()
+          require('conform').format({ async = true, lsp_format = 'fallback' })
+        end,
+        desc = 'Format',
+      },
+    },
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -24,13 +33,17 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        rust = { 'rustfmt' },
       },
     },
   },
   {
-    'zapling/mason-conform.nvim',
-    dependencies = {
-      'stevearc/conform.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    opts = {
+      ensure_installed = {
+        'stylua',
+        'rustfmt',
+      },
     },
   },
 }

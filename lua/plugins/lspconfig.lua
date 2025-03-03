@@ -23,26 +23,17 @@ return {
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-        map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-        map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-        map(
-          '<leader>ws',
-          require('telescope.builtin').lsp_dynamic_workspace_symbols,
-          '[W]orkspace [S]ymbols'
-        )
-        map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-        -- The following code creates a keymap to toggle inlay hints in your
-        -- code, if the language server you are using supports them
-        --
-        -- This may be unwanted, since they displace some of your code
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-          map('<leader>th', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-          end, '[T]oggle Inlay [H]ints')
-        end
+        map(
+          '<leader>os',
+          require('telescope.builtin').lsp_dynamic_workspace_symbols,
+          'Workspace [S]ymbols'
+        )
+        map('<leader>ot', require('telescope.builtin').lsp_type_definitions, '[T]ype Definition')
+
+        map('<leader>tr', vim.lsp.buf.rename, 'Refactor: [R]ename')
+        map('<leader>ta', vim.lsp.buf.code_action, 'Refactor: Code [A]ction', { 'n', 'x' })
       end,
     })
 
@@ -66,7 +57,7 @@ return {
           settings = {
             Lua = {
               diagnostics = {
-                globals = { 'vim' },
+                globals = { 'vim', 'client' },
               },
             },
           },
@@ -79,6 +70,7 @@ return {
     require('mason-lspconfig').setup({
       ensure_installed = {
         'lua_ls',
+        'rust_analyzer',
       },
       automatic_installation = true,
 
