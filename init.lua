@@ -83,21 +83,10 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 
 require('lazy').setup({
-  { import = 'plugins.themes' },
-
-  { import = 'plugins.neo-tree' },
-  { import = 'plugins.telescope' },
-
-  { import = 'plugins.git' },
-  { import = 'plugins.mini' },
-  { import = 'plugins.sleuth' },
-  { import = 'plugins.todo-comments' },
-  { import = 'plugins.which-key' },
-
-  { import = 'plugins.cmp' },
-  { import = 'plugins.conform' },
-  { import = 'plugins.lspconfig' },
-  { import = 'plugins.treesitter' },
+  spec = {
+    { import = 'plugins' },
+  },
+  rocks = { enabled = false },
 })
 
 -- vim: ts=2 sts=2 sw=2 et

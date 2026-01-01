@@ -1,5 +1,9 @@
 return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
+  version = '*',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+  },
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
     -- delay between pressing a key and opening which-key (milliseconds)
@@ -12,13 +16,8 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
-      { '<leader>o', group = 'LSP Goto', icon = '' },
       { '<leader>s', group = 'Search', icon = '' },
-      { '<leader>t', group = 'Refactor' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
-  },
-  dependencies = {
-    'nvim-tree/nvim-web-devicons',
   },
 }

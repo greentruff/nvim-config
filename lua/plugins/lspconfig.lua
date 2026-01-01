@@ -1,12 +1,10 @@
 return {
-  -- Main LSP Configuration
   'neovim/nvim-lspconfig',
+  version = '*',
+  lazy = true,
   dependencies = {
-    { 'williamboman/mason.nvim', opts = {} },
-    'williamboman/mason-lspconfig.nvim',
-
     'nvim-telescope/telescope.nvim',
-    'hrsh7th/cmp-nvim-lsp',
+    'saghen/blink.cmp',
   },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -17,25 +15,20 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
-        -- Jump to the definition of the word under your cursor.
-        --  This is where a variable was first declared, or where a function is defined, etc.
-        --  To jump back, press <C-t>.
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         map(
-          '<leader>os',
+          '<leader>o',
           require('telescope.builtin').lsp_dynamic_workspace_symbols,
-          'Workspace [S]ymbols'
+          'Workspace Symbols'
         )
-        map('<leader>ot', require('telescope.builtin').lsp_type_definitions, '[T]ype Definition')
+        -- map('<leader>ot', require('telescope.builtin').lsp_type_definitions, '[T]ype Definition')
 
-        map('<leader>tr', vim.lsp.buf.rename, 'Refactor: [R]ename')
-        map('<leader>ta', vim.lsp.buf.code_action, 'Refactor: Code [A]ction', { 'n', 'x' })
-
-        vim.keymap.set('n', 'cd', vim.lsp.buf.rename, { noremap = true, desc = 'Refactor: Rename' })
+        map('gr', vim.lsp.buf.rename, 'Refactor: [R]ename')
+        map('ga', vim.lsp.buf.code_action, 'Refactor: Code [A]ction', { 'n', 'x' })
       end,
     })
 
@@ -46,38 +39,18 @@ return {
     end
     vim.diagnostic.config({ signs = { text = diagnostic_signs } })
 
-    local lspconfig = require('lspconfig')
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local handlers = {
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ['lua_ls'] = function()
-        lspconfig.lua_ls.setup({
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { 'vim', 'client' },
-              },
-            },
+    vim.lsp.config('lua_lsp', {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim', 'client' },
           },
-          capabilities = capabilities,
-        })
-      end,
-    }
-
-    require('mason').setup()
-    require('mason-lspconfig').setup({
-      ensure_installed = {
-        'gopls',
-        'lua_ls',
-        'rust_analyzer',
+        },
       },
-      automatic_installation = true,
-
-      handlers = handlers,
     })
+
+    vim.lsp.enable('lua_lsp')
+    vim.lsp.enable('gopls')
+    vim.lsp.enable('rust_analyzer')
   end,
 }

@@ -1,7 +1,7 @@
--- Collection of various small independent plugins/modules
 -- docs: https://github.com/echasnovski/mini.nvim
 return {
   'echasnovski/mini.nvim',
+  version = '*',
   config = function()
     require('mini.comment').setup()
 
@@ -24,8 +24,6 @@ return {
     require('mini.pairs').setup()
 
     -- Simple and easy statusline.
-    --  You could remove this setup call if you don't like it,
-    --  and try some other statusline plugin
     local statusline = require('mini.statusline')
     statusline.setup({ use_icons = true })
 

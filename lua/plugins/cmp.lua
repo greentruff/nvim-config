@@ -1,5 +1,5 @@
 return {
-  {
+  { -- Speed up LuaLS loading
     'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
@@ -8,39 +8,32 @@ return {
       },
     },
   },
-  { -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-    },
-    config = function()
-      local cmp = require('cmp')
+  { -- completion popup
+    'saghen/blink.cmp',
+    -- optional: provides snippets for the snippet source
+    -- dependencies = { 'rafamadriz/friendly-snippets' },
+    version = '1.*',
 
-      cmp.setup({
-        completion = { completeopt = 'menu,menuone,noinsert' },
-
-        -- For an understanding of why these mappings were
-        -- chosen, you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        mapping = cmp.mapping.preset.insert({
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-f>'] = cmp.mapping.confirm({ select = true }),
-          ['<C-Space>'] = cmp.mapping.complete({}),
-        }),
-        sources = {
-          {
-            name = 'lazydev',
-            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-            group_index = 0,
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      keymap = { preset = 'enter' },
+      appearance = { nerd_font_variant = 'mono' },
+      completion = { documentation = { auto_show = false } },
+      sources = {
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
           },
-          { name = 'nvim_lsp' },
-          { name = 'path' },
         },
-      })
-    end,
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
+
   },
 }

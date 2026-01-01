@@ -1,6 +1,7 @@
 return {
   {
     'lewis6991/gitsigns.nvim',
+    tag = 'release',
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require('gitsigns')
@@ -46,14 +47,14 @@ return {
   },
   {
     'NeogitOrg/neogit',
+    tag = 'v3.0.0',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    opts = {
-      graph_style = 'unicode',
-    },
+    lazy = true,
+    opts = { graph_style = 'unicode' },
     keys = {
       {
         '<leader>g',
@@ -65,3 +66,4 @@ return {
     },
   },
 }
+
