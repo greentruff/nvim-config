@@ -7,6 +7,6 @@ return {
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    { '<leader>e', ':Neotree reveal float<CR>', desc = 'File Explorer', silent = true },
+    { '<leader>e', '<cmd>Neotree reveal float<CR>', desc = 'File Explorer', silent = true },
   },
 }

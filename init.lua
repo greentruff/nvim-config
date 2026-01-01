@@ -10,6 +10,9 @@ vim.opt.undofile = true -- Save undo history
 vim.opt.cursorline = true -- Show which line your cursor is on
 vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
 
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+
 vim.opt.signcolumn = 'yes' -- Keep signcolumn on by default
 vim.opt.updatetime = 250 -- Decrease update time
 vim.opt.timeoutlen = 300 -- Decrease mapped sequence wait time
@@ -45,13 +48,13 @@ vim.keymap.set(
 )
 
 -- Windows: Use CTRL+<hjkl> to switch between windows
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Utility
-vim.keymap.set('n', '<leader>w', ':w<CR>')
+vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save' })
 vim.keymap.set('t', '<C-\\><C-\\>', '<C-\\><C-n>')
 
 -- [[ Basic Autocommands ]]
@@ -85,7 +88,7 @@ require('lazy').setup({
   { import = 'plugins.neo-tree' },
   { import = 'plugins.telescope' },
 
-  { import = 'plugins.gitsigns' },
+  { import = 'plugins.git' },
   { import = 'plugins.mini' },
   { import = 'plugins.sleuth' },
   { import = 'plugins.todo-comments' },

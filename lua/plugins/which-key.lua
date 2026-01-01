@@ -12,6 +12,7 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
+      { '<leader>o', group = 'LSP Goto', icon = '' },
       { '<leader>s', group = 'Search', icon = '' },
       { '<leader>t', group = 'Refactor' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },

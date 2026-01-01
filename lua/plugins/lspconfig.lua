@@ -5,7 +5,7 @@ return {
     { 'williamboman/mason.nvim', opts = {} },
     'williamboman/mason-lspconfig.nvim',
 
-    -- Allows extra capabilities provided by nvim-cmp
+    'nvim-telescope/telescope.nvim',
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
@@ -34,6 +34,8 @@ return {
 
         map('<leader>tr', vim.lsp.buf.rename, 'Refactor: [R]ename')
         map('<leader>ta', vim.lsp.buf.code_action, 'Refactor: Code [A]ction', { 'n', 'x' })
+
+        vim.keymap.set('n', 'cd', vim.lsp.buf.rename, { noremap = true, desc = 'Refactor: Rename' })
       end,
     })
 
@@ -69,6 +71,7 @@ return {
     require('mason').setup()
     require('mason-lspconfig').setup({
       ensure_installed = {
+        'gopls',
         'lua_ls',
         'rust_analyzer',
       },
